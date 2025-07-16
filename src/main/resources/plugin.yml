@@ -1,0 +1,48 @@
+name: fishingAgain
+version: '1.0-SNAPSHOT'
+main: org.SakyQ.fishingAgain.FishingAgain
+api-version: '1.21'
+author: SakyQ
+description: Advanced fishing plugin with skill checks, custom fish, size/weight system, and shipwreck treasures
+website: https://github.com/SakyQ/fishingAgain
+depend: [Vault]
+softdepend: [Vault]
+
+commands:
+  fishing:
+    description: Main fishing command - view stats, sell fish, and more
+    usage: /fishing <stats|top|sell|reload|help>
+    aliases: [fish, f]
+    permission: fishingagain.use
+    permission-message: §cYou don't have permission to use fishing commands!
+
+permissions:
+  fishingagain.use:
+    description: Allows basic fishing plugin usage
+    default: true
+
+  fishingagain.sell:
+    description: Allows using the fish sell menu
+    default: true
+
+  fishingagain.stats:
+    description: Allows viewing fishing statistics
+    default: true
+
+  fishingagain.top:
+    description: Allows viewing the fishing leaderboard
+    default: true
+
+  fishingagain.reload:
+    description: Allows reloading the plugin configuration
+    default: op
+
+  fishingagain.admin:
+    description: Full admin access to all fishing features
+    default: op
+    children:
+      fishingagain.use: true
+      fishingagain.sell: true
+      fishingagain.stats: true
+      fishingagain.top: true
+      fishingagain.reload: true

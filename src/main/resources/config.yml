@@ -1,0 +1,1451 @@
+# ===============================================
+# FishingAgain - FULLY CONFIGURABLE Plugin
+# ===============================================
+config-version: 1.0
+
+# ========================================
+# CORE PLUGIN SETTINGS
+# ========================================
+plugin:
+  # Enable/disable the entire plugin
+  enabled: true
+
+  # Debug mode - shows extra console messages
+  debug: false
+
+  # Auto-save interval (in minutes)
+  auto-save-interval: 10
+
+  # Language for messages (en, es, fr, de, etc.)
+  language: "en"
+
+# ========================================
+# FISHING CORE SETTINGS
+# ========================================
+fishing:
+  # Enable/disable fishing system
+  enabled: true
+
+  # Base experience gained per successful catch
+  base-experience: 25
+
+  # Vanilla Minecraft experience per catch
+  vanilla-experience-per-catch: 3
+
+  # Enable/disable skill check mini-game
+  skill-check-enabled: true
+
+  # Auto-catch without skill check (for accessibility)
+  auto-catch-mode: false
+
+  # Fishing rod durability damage per catch
+  durability-damage: 1
+
+  # Enable fishing in lava
+  lava-fishing: false
+
+  # Minimum light level to fish (0-15, 0 = any light)
+  min-light-level: 0
+
+  # Weather requirements
+  weather:
+    # Allow fishing in rain
+    rain-allowed: true
+    # Rain fishing bonus multiplier
+    rain-bonus: 1.2
+    # Allow fishing in thunderstorms
+    thunder-allowed: true
+    # Thunder fishing bonus multiplier
+    thunder-bonus: 1.5
+    # Allow fishing in clear weather
+    clear-allowed: true
+
+  # Time requirements
+  time:
+    # Allow fishing during day
+    day-allowed: true
+    # Allow fishing during night
+    night-allowed: true
+    # Night fishing bonus multiplier
+    night-bonus: 1.1
+
+  # Biome modifiers
+  biome-modifiers:
+    ocean: 1.0
+    river: 0.8
+    swamp: 1.2
+    desert: 0.5
+    cold_ocean: 1.1
+    warm_ocean: 1.3
+    frozen_ocean: 0.7
+
+  # ========================================
+  # SKILL CHECK SETTINGS
+  # ========================================
+  skill-check:
+    # Enable different cursor styles per difficulty
+    custom-cursors: true
+
+    # Show preparation countdown
+    preparation-time: true
+
+    # Preparation time in ticks (20 = 1 second)
+    preparation-duration: 20
+
+    # Show accuracy feedback
+    accuracy-feedback: true
+
+    # Show time remaining
+    show-timer: true
+
+    # Action bar format for skill check
+    action-bar-format: "{difficulty_color}{difficulty_name}{speed_indicator} §7[{time_left}s] {bar}{accuracy_hint}"
+
+    # Enable sound effects
+    sounds-enabled: true
+
+    # Failure messages per difficulty
+    failure-messages:
+      easy: "§c🎣 The fish got away! Try to time it better next time."
+      medium: "§c🎣 So close! The fish slipped off the hook."
+      hard: "§c🎣 The fish fought back and escaped!"
+      legendary: "§5💫 The legendary creature slipped away into the depths..."
+      mythical: "§d✨ The mythical being vanished in a shimmer of light..."
+      godlike: "§4§l⚡ The divine essence returned to the cosmos..."
+
+  # ========================================
+  # DIFFICULTY SETTINGS
+  # ========================================
+  difficulties:
+    easy:
+      name: "Easy"
+      success-zone-size: 0.35       # 35% success zone
+      speed: 1                      # Slow cursor
+      experience-multiplier: 1.0    # Normal XP
+      time-limit: 120              # 6 seconds
+      cursor-acceleration: false
+      cursor-style: "▼"
+      difficulty-color: "§a"
+      warning-message: "§a🎣 A gentle fish has taken your bait..."
+      success-sound: "ENTITY_PLAYER_LEVELUP"
+
+    medium:
+      name: "Medium"
+      success-zone-size: 0.25       # 25% success zone
+      speed: 2                      # Medium speed
+      experience-multiplier: 1.5    # 50% more XP
+      time-limit: 100              # 5 seconds
+      cursor-acceleration: false
+      cursor-style: "▼"
+      difficulty-color: "§e"
+      warning-message: "§e🎣 This fish has some fight in it!"
+      success-sound: "UI_TOAST_CHALLENGE_COMPLETE"
+
+    hard:
+      name: "Hard"
+      success-zone-size: 0.18       # 18% success zone
+      speed: 3                      # Fast cursor
+      experience-multiplier: 2.0    # Double XP
+      time-limit: 80               # 4 seconds
+      cursor-acceleration: true     # Speeds up over time
+      cursor-style: "⚡"
+      difficulty-color: "§6"
+      warning-message: "§6⚠ This fish is putting up a strong fight!"
+      success-sound: "UI_TOAST_CHALLENGE_COMPLETE"
+
+    expert:
+      name: "Expert"
+      success-zone-size: 0.12       # 12% success zone
+      speed: 4                      # Very fast
+      experience-multiplier: 3.0    # Triple XP
+      time-limit: 65               # 3.25 seconds
+      cursor-acceleration: true
+      cursor-style: "★"
+      difficulty-color: "§5"
+      warning-message: "§5⚠ A legendary creature resists your line!"
+      success-sound: "ENTITY_ENDER_DRAGON_DEATH"
+
+    legendary:
+      name: "Legendary"
+      success-zone-size: 0.08       # 8% success zone
+      speed: 5                      # Extremely fast
+      experience-multiplier: 4.0    # 4x XP
+      time-limit: 50               # 2.5 seconds
+      cursor-acceleration: true
+      cursor-style: "★"
+      difficulty-color: "§5"
+      warning-message: "§5⚠ §lA LEGENDARY CREATURE RESISTS YOUR LINE!"
+      success-sound: "ENTITY_LIGHTNING_BOLT_IMPACT"
+
+    mythical:
+      name: "Mythical"
+      success-zone-size: 0.06
+      speed: 6
+      experience-multiplier: 5.0
+      time-limit: 40
+      cursor-acceleration: true
+      cursor-style: "♦"
+      difficulty-color: "§d"
+      warning-message: "§d⚠ §lSOMETHING MYTHICAL HAS TAKEN THE BAIT!"
+      success-sound: "ENTITY_WITHER_SPAWN"
+
+    godlike:
+      name: "Godlike"
+      success-zone-size: 0.04
+      speed: 7
+      experience-multiplier: 6.0
+      time-limit: 30
+      cursor-acceleration: true
+      cursor-style: "◆"
+      difficulty-color: "§4"
+      warning-message: "§4⚠ §l§nDIVINE POWER AWAKENS!§r §4⚠"
+      success-sound: "ENTITY_LIGHTNING_BOLT_THUNDER"
+
+  # ========================================
+  # FISH COLLECTION
+  # ========================================
+  custom-items:
+    # Enable/disable custom fish generation
+    enabled: true
+
+    # Global rarity multiplier (1.0 = normal, 0.5 = half as rare)
+    global-rarity-multiplier: 1.0
+
+    # Fish definitions
+    sardine:
+      enabled: true
+      material: COD
+      display-name: "§7Sardine"
+      lore:
+        - "§7Small schooling fish"
+        - "§7Common in coastal waters"
+      difficulty: easy
+      rarity: 0.3
+      category: "common"
+      biome-restrictions: []  # Empty = all biomes
+      time-restrictions: []   # Empty = all times
+      weather-restrictions: [] # Empty = all weather
+
+    mackerel:
+      enabled: true
+      material: COD
+      display-name: "§fMackerel"
+      lore:
+        - "§7Fast-swimming fish"
+        - "§7Popular for eating"
+      difficulty: easy
+      rarity: 0.25
+      category: "common"
+
+    herring:
+      enabled: true
+      material: SALMON
+      display-name: "§aHerring"
+      lore:
+        - "§7Important commercial fish"
+        - "§7Rich in nutrients"
+      difficulty: easy
+      rarity: 0.2
+      category: "common"
+
+    sea_bass:
+      enabled: true
+      material: COD
+      display-name: "§6Sea Bass"
+      lore:
+        - "§7Prized sport fish"
+        - "§7Found near rocky coasts"
+      difficulty: medium
+      rarity: 0.15
+      category: "uncommon"
+
+    red_mullet:
+      enabled: true
+      material: TROPICAL_FISH
+      display-name: "§cRed Mullet"
+      lore:
+        - "§7Bottom-dwelling fish"
+        - "§7Valued for its taste"
+      difficulty: medium
+      rarity: 0.12
+      category: "uncommon"
+
+    flounder:
+      enabled: true
+      material: COD
+      display-name: "§eFlatfish"
+      lore:
+        - "§7Camouflaged bottom fish"
+        - "§7Excellent eating fish"
+      difficulty: medium
+      rarity: 0.1
+      category: "uncommon"
+
+    tuna:
+      enabled: true
+      material: COD
+      display-name: "§bBluefin Tuna"
+      lore:
+        - "§7Large migratory fish"
+        - "§7Highly valuable catch"
+        - "§6Rare find"
+      difficulty: hard
+      rarity: 0.08
+      category: "rare"
+      # Tuna only in ocean biomes
+      biome-restrictions: ["ocean", "deep_ocean", "cold_ocean", "warm_ocean"]
+
+    swordfish:
+      enabled: true
+      material: COD
+      display-name: "§8Swordfish"
+      lore:
+        - "§7Powerful predator fish"
+        - "§7Known for its speed"
+        - "§6Rare find"
+      difficulty: hard
+      rarity: 0.06
+      category: "rare"
+      biome-restrictions: ["ocean", "deep_ocean", "warm_ocean"]
+
+    mahi_mahi:
+      enabled: true
+      material: TROPICAL_FISH
+      display-name: "§eMahi-Mahi"
+      lore:
+        - "§7Colorful tropical fish"
+        - "§7Fast and agile"
+        - "§6Rare find"
+      difficulty: hard
+      rarity: 0.05
+      category: "rare"
+      biome-restrictions: ["warm_ocean"]
+
+    giant_squid:
+      enabled: true
+      material: NAUTILUS_SHELL
+      display-name: "§5Giant Squid Tentacle"
+      lore:
+        - "§7From the deep ocean"
+        - "§7Mysterious sea creature"
+        - "§5Very rare catch"
+      difficulty: expert
+      rarity: 0.03
+      category: "epic"
+      biome-restrictions: ["deep_ocean"]
+      time-restrictions: ["night"]  # Only at night
+
+    shark:
+      enabled: true
+      material: COD
+      display-name: "§8Great White Shark"
+      lore:
+        - "§7Apex predator of the seas"
+        - "§7Dangerous to catch"
+        - "§5Very rare catch"
+      difficulty: expert
+      rarity: 0.02
+      category: "epic"
+      biome-restrictions: ["ocean", "deep_ocean"]
+
+    whale_fragment:
+      enabled: true
+      material: HEART_OF_THE_SEA
+      display-name: "§bWhale Bone"
+      lore:
+        - "§7Remnant from a great whale"
+        - "§7Extremely valuable"
+        - "§5Legendary catch"
+      difficulty: legendary
+      rarity: 0.01
+      category: "legendary"
+      biome-restrictions: ["deep_ocean", "cold_ocean"]
+
+    # ---- SHIPWRECK TREASURES ----
+    ship_compass:
+      enabled: true
+      material: COMPASS
+      display-name: "§6Lost Ship's Compass"
+      lore:
+        - "§7From a sunken merchant vessel"
+        - "§7Still points to mysterious locations"
+        - "§6§lSHIPWRECK TREASURE"
+      difficulty: expert
+      rarity: 0.015
+      category: "treasure"
+
+    ship_map:
+      enabled: true
+      material: MAP
+      display-name: "§e⚓ Naval Chart"
+      lore:
+        - "§7Waterlogged navigation chart"
+        - "§7Shows secret trade routes"
+        - "§6§lSHIPWRECK TREASURE"
+      difficulty: expert
+      rarity: 0.012
+      category: "treasure"
+
+    ship_bell:
+      enabled: true
+      material: BELL
+      display-name: "§6⚓ Ship's Bell"
+      lore:
+        - "§7Heavy brass bell from a warship"
+        - "§7Bears the name 'HMS Victory'"
+        - "§6§lSHIPWRECK TREASURE"
+      difficulty: hard
+      rarity: 0.018
+      category: "treasure"
+
+    cannon_ball:
+      enabled: true
+      material: IRON_BLOCK
+      display-name: "§8⚓ Cannonball"
+      lore:
+        - "§7Heavy iron cannonball"
+        - "§7From a naval battle long past"
+        - "§6§lSHIPWRECK TREASURE"
+      difficulty: hard
+      rarity: 0.02
+      category: "treasure"
+
+    ship_anchor:
+      enabled: true
+      material: ANVIL
+      display-name: "§7⚓ Ship's Anchor"
+      lore:
+        - "§7Rusted anchor from the deep"
+        - "§7Once held a mighty vessel"
+        - "§6§lSHIPWRECK TREASURE"
+      difficulty: expert
+      rarity: 0.008
+      category: "treasure"
+
+    treasure_coin:
+      enabled: true
+      material: GOLD_NUGGET
+      display-name: "§6⚓ Spanish Doubloon"
+      lore:
+        - "§7Ancient gold coin"
+        - "§7From a treasure galleon"
+        - "§6§lSHIPWRECK TREASURE"
+      difficulty: medium
+      rarity: 0.025
+      category: "treasure"
+
+    ship_lantern:
+      enabled: true
+      material: LANTERN
+      display-name: "§e⚓ Captain's Lantern"
+      lore:
+        - "§7Ornate brass lantern"
+        - "§7Once lit the captain's quarters"
+        - "§6§lSHIPWRECK TREASURE"
+      difficulty: hard
+      rarity: 0.015
+      category: "treasure"
+
+    naval_sword:
+      enabled: true
+      material: IRON_SWORD
+      display-name: "§b⚓ Naval Officer's Sword"
+      lore:
+        - "§7Ceremonial sword of a sea captain"
+        - "§7Blade dulled by saltwater"
+        - "§6§lSHIPWRECK TREASURE"
+      difficulty: expert
+      rarity: 0.01
+      category: "treasure"
+
+    ship_wheel:
+      enabled: true
+      material: SHIELD
+      display-name: "§6⚓ Ship's Wheel"
+      lore:
+        - "§7Wooden steering wheel"
+        - "§7From a merchant ship's bridge"
+        - "§6§lSHIPWRECK TREASURE"
+      difficulty: expert
+      rarity: 0.007
+      category: "treasure"
+
+    message_bottle:
+      enabled: true
+      material: GLASS_BOTTLE
+      display-name: "§b⚓ Message in a Bottle"
+      lore:
+        - "§7Sealed bottle with a message"
+        - "§7Last words from a lost sailor"
+        - "§6§lSHIPWRECK TREASURE"
+      difficulty: medium
+      rarity: 0.02
+      category: "treasure"
+
+    royal_crown:
+      enabled: true
+      material: GOLDEN_HELMET
+      display-name: "§6⚓ Royal Crown"
+      lore:
+        - "§7Ornate golden crown"
+        - "§7Lost when the royal yacht sank"
+        - "§6§l⭐ LEGENDARY TREASURE ⭐"
+      difficulty: legendary
+      rarity: 0.003
+      category: "legendary"
+
+    admiral_uniform:
+      enabled: true
+      material: LEATHER_CHESTPLATE
+      display-name: "§9⚓ Admiral's Coat"
+      lore:
+        - "§7Blue naval uniform coat"
+        - "§7Belonged to a famous admiral"
+        - "§6§lSHIPWRECK TREASURE"
+      difficulty: expert
+      rarity: 0.009
+      category: "treasure"
+
+    ship_log:
+      enabled: true
+      material: BOOK
+      display-name: "§e⚓ Captain's Log"
+      lore:
+        - "§7Waterlogged ship's journal"
+        - "§7Records the final voyage"
+        - "§6§lSHIPWRECK TREASURE"
+      difficulty: hard
+      rarity: 0.016
+      category: "treasure"
+
+  # ========================================
+  # LEVEL REWARDS SYSTEM
+  # ========================================
+  level-rewards:
+    # Enable level rewards
+    enabled: true
+
+    # Broadcast level ups to all players
+    broadcast-levelups: true
+
+    # Level up sound for player
+    levelup-sound: "UI_TOAST_CHALLENGE_COMPLETE"
+
+    # Level up particle effect
+    levelup-particles: true
+
+    # Particle type for level up
+    particle-type: "VILLAGER_HAPPY"
+
+    # Number of particles
+    particle-count: 20
+
+    # Reward definitions
+    rewards:
+      3:
+        items:
+          - "EMERALD:2"
+          - "COOKED_COD:5"
+        commands:
+          - "tell {player} §aYou're getting better at fishing!"
+        broadcast-message: "§a{player} reached fishing level 3!"
+
+      5:
+        items:
+          - "EMERALD:5"
+          - "COOKED_COD:10"
+          - "BREAD:5"
+        commands:
+          - "tell {player} §aYou're becoming a skilled fisher!"
+        broadcast-message: "§6{player} reached fishing level 5!"
+
+      10:
+        items:
+          - "DIAMOND:2"
+          - "EMERALD:10"
+          - "EXPERIENCE_BOTTLE:5"
+        commands:
+          - "tell {player} §6Excellent fishing skills!"
+          - "give {player} minecraft:fishing_rod{Enchantments:[{id:lure,lvl:1}]} 1"
+        broadcast-message: "§6{player} became a skilled fisher (Level 10)!"
+
+      15:
+        items:
+          - "DIAMOND:3"
+          - "EMERALD:15"
+          - "EXPERIENCE_BOTTLE:10"
+          - "GOLD_INGOT:3"
+        commands:
+          - "tell {player} §bMaster Fisher achieved!"
+          - "give {player} minecraft:fishing_rod{Enchantments:[{id:luck_of_the_sea,lvl:2},{id:lure,lvl:2}]} 1"
+        broadcast-message: "§b{player} became a Master Fisher!"
+
+      20:
+        items:
+          - "DIAMOND:5"
+          - "EMERALD:25"
+          - "GOLD_INGOT:5"
+          - "EXPERIENCE_BOTTLE:20"
+        commands:
+          - "tell {player} §5§lLEGENDARY FISHER!"
+          - "give {player} minecraft:fishing_rod{Enchantments:[{id:luck_of_the_sea,lvl:3},{id:lure,lvl:3},{id:unbreaking,lvl:2}]} 1"
+        broadcast-message: "§5§l{player} became a LEGENDARY FISHER!"
+
+      25:
+        items:
+          - "DIAMOND:8"
+          - "EMERALD:35"
+          - "GOLD_INGOT:8"
+          - "EXPERIENCE_BOTTLE:30"
+        commands:
+          - "tell {player} §d§lELITE FISHER!"
+          - "give {player} minecraft:fishing_rod{display:{Name:'{\"text\":\"Elite Fishing Rod\",\"color\":\"blue\",\"bold\":true}'},Enchantments:[{id:luck_of_the_sea,lvl:4},{id:lure,lvl:4},{id:unbreaking,lvl:3}]} 1"
+        broadcast-message: "§d§l{player} became an ELITE FISHER!"
+
+      30:
+        items:
+          - "DIAMOND:10"
+          - "EMERALD:50"
+          - "GOLD_INGOT:10"
+          - "EXPERIENCE_BOTTLE:50"
+        commands:
+          - "tell {player} §6§l⭐ MASTER OF THE SEAS! ⭐"
+          - "give {player} minecraft:fishing_rod{display:{Name:'{\"text\":\"Master Fisher Rod\",\"color\":\"gold\",\"bold\":true}'},Enchantments:[{id:luck_of_the_sea,lvl:5},{id:lure,lvl:5},{id:unbreaking,lvl:3},{id:mending,lvl:1}]} 1"
+        broadcast-message: "§6§l⭐ {player} became MASTER OF THE SEAS! ⭐"
+
+# ========================================
+# SELL MENU CONFIGURATION
+# ========================================
+sell-menu:
+  # Enable/disable sell menu
+  enabled: true
+
+  # Require permission to use sell menu
+  require-permission: true
+
+  # Permission required
+  permission: "fishingagain.sell"
+
+  # Menu appearance
+  title: "§9§lFish Market"
+  size: 54
+
+  # Enable/disable vanilla fish selling (EXPLOIT PROTECTION)
+  allow-vanilla-fish: false
+
+  # Require fishing metadata for items to be sellable
+  require-fishing-metadata: true
+
+  # UI Items
+  ui-items:
+    sell-button:
+      enabled: true
+      slot: 53
+      material: "EMERALD"
+      name: "§a§lSELL FISH"
+      lore:
+        - "§7Sell your caught fish"
+        - "§7Get money for your catches"
+      # Dynamic lore gets added showing fish count and value
+
+    info-button:
+      enabled: true
+      slot: 45
+      material: "BOOK"
+      name: "§b§lMARKET INFO"
+      lore:
+        - "§7Fish Market"
+        - "§7Place fish to sell them"
+      show-prices: true
+      # When show-prices is true, price info gets added to lore
+
+    close-button:
+      enabled: true
+      slot: 49
+      material: "BARRIER"
+      name: "§c§lCLOSE"
+      lore:
+        - "§7Exit without selling"
+
+    decoration:
+      enabled: true
+      material: "BLUE_STAINED_GLASS_PANE"
+      name: " "
+      slots: [46, 47, 48, 50, 51, 52]
+
+  # Sellable materials (vanilla items)
+  sellable-materials:
+    - "COD"
+    - "SALMON"
+    - "TROPICAL_FISH"
+    - "PUFFERFISH"
+    - "NAUTILUS_SHELL"
+    - "HEART_OF_THE_SEA"
+    - "PRISMARINE_SHARD"
+    - "COMPASS"
+    - "MAP"
+    - "BELL"
+    - "IRON_BLOCK"
+    - "ANVIL"
+    - "GOLD_NUGGET"
+    - "LANTERN"
+    - "IRON_SWORD"
+    - "SHIELD"
+    - "GLASS_BOTTLE"
+    - "GOLDEN_HELMET"
+    - "LEATHER_CHESTPLATE"
+    - "BOOK"
+
+  # Fish pricing system
+  prices:
+    # Enable price variations
+    enable-variations: true
+
+    # Enable size-based bonuses
+    enable-size-bonus: true
+
+    # Maximum size bonus multiplier (exploit protection)
+    max-size-bonus: 1.5
+
+    # Minimum size penalty multiplier
+    min-size-penalty: 0.8
+
+    # Material-based prices (vanilla items)
+    materials:
+      COD:
+        base-price: 0.10
+        price-variation: 0.05
+      SALMON:
+        base-price: 0.10
+        price-variation: 0.05
+      TROPICAL_FISH:
+        base-price: 0.10
+        price-variation: 0.05
+      PUFFERFISH:
+        base-price: 0.10
+        price-variation: 0.05
+      NAUTILUS_SHELL:
+        base-price: 0.10
+        price-variation: 0.05
+      HEART_OF_THE_SEA:
+        base-price: 0.10
+        price-variation: 0.05
+      PRISMARINE_SHARD:
+        base-price: 0.10
+        price-variation: 0.05
+
+    # Custom fish prices
+    custom-fish:
+      # Common Fish (2-3 coins)
+      sardine:
+        display-name: "Sardine"
+        base-price: 2.0
+        price-variation: 0.10
+      mackerel:
+        display-name: "Mackerel"
+        base-price: 2.2
+        price-variation: 0.10
+      herring:
+        display-name: "Herring"
+        base-price: 2.5
+        price-variation: 0.10
+
+      # Uncommon Fish (3-4 coins)
+      sea_bass:
+        display-name: "Sea Bass"
+        base-price: 3.0
+        price-variation: 0.08
+      red_mullet:
+        display-name: "Red Mullet"
+        base-price: 2.8
+        price-variation: 0.08
+      flounder:
+        display-name: "Flatfish"
+        base-price: 2.7
+        price-variation: 0.08
+
+      # Rare Fish (8-12 coins)
+      tuna:
+        display-name: "Bluefin Tuna"
+        base-price: 8.0
+        price-variation: 0.06
+      swordfish:
+        display-name: "Swordfish"
+        base-price: 10.0
+        price-variation: 0.06
+      mahi_mahi:
+        display-name: "Mahi-Mahi"
+        base-price: 9.0
+        price-variation: 0.06
+
+      # Epic Fish (15-25 coins)
+      giant_squid:
+        display-name: "Giant Squid Tentacle"
+        base-price: 18.0
+        price-variation: 0.05
+      shark:
+        display-name: "Great White Shark"
+        base-price: 25.0
+        price-variation: 0.05
+      whale_fragment:
+        display-name: "Whale Bone"
+        base-price: 30.0
+        price-variation: 0.05
+
+      # SHIPWRECK TREASURES (20-80 coins) - MASSIVELY INCREASED
+      ship_compass:
+        display-name: "Lost Ship's Compass"
+        base-price: 25.0
+        price-variation: 0.08
+      ship_map:
+        display-name: "Naval Chart"
+        base-price: 30.0
+        price-variation: 0.08
+      ship_bell:
+        display-name: "Ship's Bell"
+        base-price: 35.0
+        price-variation: 0.08
+      cannon_ball:
+        display-name: "Cannonball"
+        base-price: 20.0
+        price-variation: 0.10
+      ship_anchor:
+        display-name: "Ship's Anchor"
+        base-price: 45.0
+        price-variation: 0.06
+      treasure_coin:
+        display-name: "Spanish Doubloon"
+        base-price: 40.0
+        price-variation: 0.08
+      ship_lantern:
+        display-name: "Captain's Lantern"
+        base-price: 32.0
+        price-variation: 0.08
+      naval_sword:
+        display-name: "Naval Officer's Sword"
+        base-price: 50.0
+        price-variation: 0.06
+      ship_wheel:
+        display-name: "Ship's Wheel"
+        base-price: 55.0
+        price-variation: 0.06
+      message_bottle:
+        display-name: "Message in a Bottle"
+        base-price: 22.0
+        price-variation: 0.10
+
+      # LEGENDARY TREASURES (60-80 coins) - NOW PROPERLY VALUABLE
+      royal_crown:
+        display-name: "Royal Crown"
+        base-price: 80.0
+        price-variation: 0.05
+      admiral_uniform:
+        display-name: "Admiral's Coat"
+        base-price: 65.0
+        price-variation: 0.06
+      ship_log:
+        display-name: "Captain's Log"
+        base-price: 28.0
+        price-variation: 0.08
+
+  # Messages
+  messages:
+    menu-opened: "§9Fish Market opened! Place your catch to sell."
+    economy-disabled: "§cEconomy system unavailable!"
+    no-permission: "§cYou don't have permission to sell fish!"
+    no-fish: "§cNo fish to sell!"
+    sale-success:
+      - "§a§lSALE COMPLETE!"
+      - "§7Sold §e{count} §7fish for §a${amount}"
+      - "§7Balance: §a${balance}"
+
+  # Sounds
+  sounds:
+    enabled: true
+    menu-open: "BLOCK_CHEST_OPEN"
+    sell-success:
+      - "ENTITY_PLAYER_LEVELUP:1.0:1.0"
+      - "ENTITY_EXPERIENCE_ORB_PICKUP:0.8:1.2"
+    sell-fail: "ENTITY_VILLAGER_NO"
+
+  # Logging
+  logging:
+    enabled: true
+    log-format: "{player} sold {count} fish for ${amount}"
+
+# ========================================
+# DISCOVERY GUI CONFIGURATION
+# ========================================
+discovery-gui:
+  # Enable/disable discovery GUI
+  enabled: true
+
+  # Menu title
+  title: "§6§lFish Discovery Collection"
+
+  # Menu size
+  size: 54
+
+  # Items per page
+  items-per-page: 28
+
+  # Enable pagination
+  pagination-enabled: true
+
+  # Enable sound effects
+  sounds-enabled: true
+
+  # UI Elements
+  ui-elements:
+    progress-book:
+      enabled: true
+      slot: 49
+      material: "BOOK"
+      name: "§6§lYour Discovery Progress"
+
+    previous-page:
+      enabled: true
+      slot: 45
+      material: "ARROW"
+      name: "§e§lPrevious Page"
+
+    next-page:
+      enabled: true
+      slot: 53
+      material: "ARROW"
+      name: "§e§lNext Page"
+
+    close-button:
+      enabled: true
+      slot: 52
+      material: "BARRIER"
+      name: "§c§lClose Discovery"
+
+    records-button:
+      enabled: true
+      slot: 46
+      material: "GOLDEN_HELMET"
+      name: "§6§lFishing Records"
+
+    stats-button:
+      enabled: true
+      slot: 47
+      material: "WRITABLE_BOOK"
+      name: "§b§lYour Statistics"
+
+    sort-button:
+      enabled: true
+      slot: 48
+      material: "HOPPER"
+      name: "§d§lSort Options"
+
+    decoration:
+      enabled: true
+      material: "BLUE_STAINED_GLASS_PANE"
+      name: " "
+      slots: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35, 36, 44, 50, 51]
+
+  # Discovery display settings
+  discovery-display:
+    # Show undiscovered fish as mystery items
+    show-mysteries: true
+
+    # Material for undiscovered fish
+    mystery-material: "GRAY_STAINED_GLASS_PANE"
+
+    # Name for undiscovered fish
+    mystery-name: "§8§l??? Unknown Creature"
+
+    # Show hints for undiscovered fish
+    show-hints: true
+
+    # Show estimated values
+    show-values: true
+
+    # Show rarity information
+    show-rarity: true
+
+  # Player ranking system
+  ranking:
+    enabled: true
+    titles:
+      0: "§8Beginner"
+      10: "§8Novice Explorer"
+      30: "§7Dedicated Angler"
+      50: "§aSkilled Fisher"
+      70: "§eExperienced Angler"
+      90: "§6Master Explorer"
+
+  # Sounds
+  sounds:
+    menu-open: "BLOCK_CHEST_OPEN"
+    menu-close: "BLOCK_CHEST_CLOSE"
+    page-turn: "UI_BUTTON_CLICK"
+    fish-click: "ENTITY_FISH_SWIM"
+    progress-view: "ENTITY_EXPERIENCE_ORB_PICKUP"
+
+# ========================================
+# FISH SPECIES SIZE & WEIGHT DATA
+# ========================================
+fish-stats:
+  # Enable fish stats system
+  enabled: true
+
+  # Measurement system configuration
+  use-metric-system: true  # true = metric (cm/kg), false = imperial (inches/lbs)
+
+  metric:
+    length-unit: "cm"           # centimeters
+    weight-unit: "kg"           # kilograms
+    small-weight-unit: "g"      # grams (for fish under 1kg)
+
+  imperial:
+    length-unit: "in"           # inches
+    weight-unit: "lbs"          # pounds
+    small-weight-unit: "oz"     # ounces (for fish under 1lb)
+
+  # Size categories and their display
+  size-categories:
+    trophy:
+      threshold: 0.9  # 90th percentile
+      name: "§6§lTrophy Size!"
+      lore-addition: "§6✦ Record Catch! ✦"
+    large:
+      threshold: 0.8
+      name: "§eLarge"
+      lore-addition: "§eExcellent specimen!"
+    above-average:
+      threshold: 0.7
+      name: "§aAbove Average"
+      lore-addition: ""
+    average:
+      threshold: 0.3
+      name: "§7Average"
+      lore-addition: ""
+    small:
+      threshold: 0.0
+      name: "§8Small"
+      lore-addition: ""
+
+fish-species:
+  # Small fish (realistic sizes)
+  sardine:
+    name: "Sardine"
+    min-length: 8.0      # 8 cm minimum
+    max-length: 15.0     # 15 cm maximum (realistic sardine size)
+    min-weight: 0.02     # 20 grams
+    max-weight: 0.08     # 80 grams
+    length-weight-ratio: 0.005
+    quality-modifier: 1.0
+
+  herring:
+    name: "Herring"
+    min-length: 12.0     # 12 cm minimum
+    max-length: 25.0     # 25 cm maximum
+    min-weight: 0.05     # 50 grams
+    max-weight: 0.15     # 150 grams
+    length-weight-ratio: 0.006
+    quality-modifier: 1.0
+
+  mackerel:
+    name: "Mackerel"
+    min-length: 15.0     # 15 cm minimum
+    max-length: 35.0     # 35 cm maximum
+    min-weight: 0.1      # 100 grams
+    max-weight: 0.5      # 500 grams
+    length-weight-ratio: 0.014
+    quality-modifier: 1.0
+
+  # Medium fish
+  sea_bass:
+    name: "Sea Bass"
+    min-length: 25.0     # 25 cm minimum
+    max-length: 60.0     # 60 cm maximum
+    min-weight: 0.5      # 500 grams
+    max-weight: 3.0      # 3 kg
+    length-weight-ratio: 0.05
+    quality-modifier: 1.2
+
+  red_mullet:
+    name: "Red Mullet"
+    min-length: 15.0     # 15 cm minimum
+    max-length: 40.0     # 40 cm maximum
+    min-weight: 0.2      # 200 grams
+    max-weight: 1.2      # 1.2 kg
+    length-weight-ratio: 0.03
+    quality-modifier: 1.1
+
+  flounder:
+    name: "Flatfish"
+    min-length: 20.0     # 20 cm minimum
+    max-length: 50.0     # 50 cm maximum
+    min-weight: 0.3      # 300 grams
+    max-weight: 2.0      # 2 kg
+    length-weight-ratio: 0.04
+    quality-modifier: 1.1
+
+  # Large fish
+  tuna:
+    name: "Bluefin Tuna"
+    min-length: 120.0    # 1.2 meters minimum
+    max-length: 300.0    # 3 meters maximum (giant bluefin)
+    min-weight: 15.0     # 15 kg minimum
+    max-weight: 200.0    # 200 kg maximum
+    length-weight-ratio: 0.67
+    quality-modifier: 2.0
+
+  swordfish:
+    name: "Swordfish"
+    min-length: 150.0    # 1.5 meters minimum
+    max-length: 400.0    # 4 meters maximum
+    min-weight: 20.0     # 20 kg minimum
+    max-weight: 300.0    # 300 kg maximum
+    length-weight-ratio: 0.75
+    quality-modifier: 1.8
+
+  mahi_mahi:
+    name: "Mahi-Mahi"
+    min-length: 60.0     # 60 cm minimum
+    max-length: 150.0    # 1.5 meters maximum
+    min-weight: 5.0      # 5 kg minimum
+    max-weight: 30.0     # 30 kg maximum
+    length-weight-ratio: 0.2
+    quality-modifier: 1.5
+
+  # Special catches
+  giant_squid:
+    name: "Giant Squid"
+    min-length: 200.0    # 2 meters minimum (tentacle)
+    max-length: 1000.0   # 10 meters maximum
+    min-weight: 50.0     # 50 kg minimum
+    max-weight: 500.0    # 500 kg maximum
+    length-weight-ratio: 0.5
+    quality-modifier: 3.0
+
+  shark:
+    name: "Great White Shark"
+    min-length: 200.0    # 2 meters minimum
+    max-length: 600.0    # 6 meters maximum
+    min-weight: 100.0    # 100 kg minimum
+    max-weight: 1000.0   # 1 ton maximum
+    length-weight-ratio: 1.67
+    quality-modifier: 2.5
+
+  # Vanilla compatibility
+  COD:
+    name: "Cod"
+    min-length: 30.0     # 30 cm minimum
+    max-length: 80.0     # 80 cm maximum
+    min-weight: 1.0      # 1 kg minimum
+    max-weight: 8.0      # 8 kg maximum
+    length-weight-ratio: 0.1
+    quality-modifier: 1.0
+
+  SALMON:
+    name: "Salmon"
+    min-length: 40.0     # 40 cm minimum
+    max-length: 120.0    # 1.2 meters maximum
+    min-weight: 2.0      # 2 kg minimum
+    max-weight: 15.0     # 15 kg maximum
+    length-weight-ratio: 0.125
+    quality-modifier: 1.2
+
+  TROPICAL_FISH:
+    name: "Tropical Fish"
+    min-length: 5.0      # 5 cm minimum
+    max-length: 20.0     # 20 cm maximum
+    min-weight: 0.01     # 10 grams minimum
+    max-weight: 0.2      # 200 grams maximum
+    length-weight-ratio: 0.01
+    quality-modifier: 1.0
+
+  PUFFERFISH:
+    name: "Pufferfish"
+    min-length: 10.0     # 10 cm minimum
+    max-length: 35.0     # 35 cm maximum
+    min-weight: 0.05     # 50 grams minimum
+    max-weight: 1.0      # 1 kg maximum
+    length-weight-ratio: 0.029
+    quality-modifier: 1.3
+
+# ========================================
+# RECORDS AND ANNOUNCEMENTS SYSTEM
+# ========================================
+records:
+  # Enable records tracking
+  enabled: true
+
+  # Enable discoveries tracking
+  discoveries-enabled: true
+
+  # Broadcast settings
+  broadcasts:
+    # Enable discovery broadcasts
+    discovery-broadcasts: true
+
+    # Enable record broadcasts
+    record-broadcasts: true
+
+    # Enable rare catch broadcasts
+    rare-catch-broadcasts: true
+
+    # Minimum difficulty for rare catch broadcasts
+    rare-broadcast-threshold: "expert"
+
+  # Discovery broadcast messages
+  discovery-messages:
+    default: "{difficulty_color}🎣 FIRST DISCOVERY! {player} discovered a {fish_name}!"
+    legendary: "{difficulty_color}⭐ LEGENDARY DISCOVERY! {player} found a {fish_name}!"
+    mythical: "{difficulty_color}✦ MYTHICAL DISCOVERY! {player} uncovered a {fish_name}!"
+    godlike: "{difficulty_color}⬢ DIVINE DISCOVERY! {player} witnessed a {fish_name}!"
+
+  # Record broadcast messages
+  record-messages:
+    new-record: "{difficulty_color}🏆 NEW RECORD! {player} caught a {fish_name} that is {length} {length_unit} long!"
+    broken-record: "{difficulty_color}🏆 RECORD BROKEN! {player} caught a {fish_name} that is {length} {length_unit} long!"
+
+  # Rare catch broadcast messages
+  rare-catch-messages:
+    legendary: "{difficulty_color}⭐ LEGENDARY CATCH! {player} landed a {fish_name} ({length} {length_unit})!"
+    mythical: "{difficulty_color}✦ MYTHICAL CATCH! {player} caught a {fish_name} ({length} {length_unit})!"
+    godlike: "{difficulty_color}⬢ GODLIKE CATCH! {player} mastered a {fish_name} ({length} {length_unit})!"
+    divine: "{difficulty_color}✦ DIVINE CATCH! {player} achieved the impossible with a {fish_name} ({length} {length_unit})!"
+
+  # Broadcast sounds
+  sounds:
+    discovery: "UI_TOAST_CHALLENGE_COMPLETE:0.7:1.2"
+    new-record: "ENTITY_PLAYER_LEVELUP:1.0:0.8"
+    broken-record: "ENTITY_PLAYER_LEVELUP:1.0:0.8"
+    legendary-catch: "ENTITY_ENDER_DRAGON_DEATH:0.5:1.0"
+    mythical-catch: "ENTITY_WITHER_SPAWN:0.5:1.0"
+    godlike-catch: "ENTITY_LIGHTNING_BOLT_THUNDER:0.5:1.0"
+
+# ========================================
+# COMMANDS CONFIGURATION
+# ========================================
+commands:
+  # Main command settings
+  main-command:
+    name: "fishing"
+    aliases: ["fish", "fa"]
+    description: "FishingAgain main command"
+
+  # Subcommands
+  subcommands:
+    stats:
+      enabled: true
+      aliases: ["level", "info"]
+      description: "Show your fishing stats"
+      permission: "fishingagain.stats"
+
+    top:
+      enabled: true
+      aliases: ["leaderboard", "lb"]
+      description: "Show fishing leaderboard"
+      permission: "fishingagain.top"
+      limit: 10  # Number of top players to show
+
+    sell:
+      enabled: true
+      aliases: ["market", "shop"]
+      description: "Open fish market"
+      permission: "fishingagain.sell"
+
+    discover:
+      enabled: true
+      aliases: ["discovery", "collection", "discoveries"]
+      description: "View fish collection"
+      permission: "fishingagain.discover"
+
+    reload:
+      enabled: true
+      description: "Reload plugin configuration"
+      permission: "fishingagain.reload"
+
+    help:
+      enabled: true
+      description: "Show help information"
+      permission: "fishingagain.help"
+
+# ========================================
+# PERMISSIONS CONFIGURATION
+# ========================================
+permissions:
+  # Default permissions for players
+  default-permissions:
+    - "fishingagain.stats"
+    - "fishingagain.top"
+    - "fishingagain.sell"
+    - "fishingagain.discover"
+    - "fishingagain.help"
+
+  # Admin permissions
+  admin-permissions:
+    - "fishingagain.reload"
+    - "fishingagain.admin"
+
+# ========================================
+# LOCALE SYSTEM
+# ========================================
+locale:
+  # Default locale
+  default-locale: "en"
+
+  # Available locales
+  available-locales: ["en", "es", "fr", "de"]
+
+  # Use client locale if available
+  use-client-locale: true
+
+  # Fallback to default if client locale not available
+  fallback-to-default: true
+
+# ========================================
+# DATABASE CONFIGURATION
+# ========================================
+database:
+  # Database type: file, mysql, postgresql
+  type: "file"
+
+  # File database settings
+  file:
+    # Save player data file
+    player-data-file: "player_data.yml"
+
+    # Save records file
+    records-file: "fishing_records.yml"
+
+    # Save discoveries file
+    discoveries-file: "discoveries.yml"
+
+    # Auto-save interval (minutes)
+    auto-save-interval: 5
+
+  # MySQL settings (if type is mysql)
+  mysql:
+    host: "localhost"
+    port: 3306
+    database: "fishingagain"
+    username: "username"
+    password: "password"
+    table-prefix: "fa_"
+    connection-pool-size: 10
+
+  # PostgreSQL settings (if type is postgresql)
+  postgresql:
+    host: "localhost"
+    port: 5432
+    database: "fishingagain"
+    username: "username"
+    password: "password"
+    table-prefix: "fa_"
+    connection-pool-size: 10
+
+# ========================================
+# PERFORMANCE SETTINGS
+# ========================================
+performance:
+  # Enable async processing for heavy operations
+  async-processing: true
+
+  # Cache settings
+  cache:
+    # Enable player data caching
+    player-data-cache: true
+
+    # Cache size (number of players)
+    cache-size: 1000
+
+    # Cache expiration time (minutes)
+    cache-expiration: 30
+
+    # Enable price caching for sell menu
+    price-cache: true
+
+    # Price cache size
+    price-cache-size: 500
+
+  # Threading settings
+  threading:
+    # Thread pool size for async operations
+    thread-pool-size: 4
+
+    # Enable async file saving
+    async-file-saving: true
+
+    # Enable async database operations
+    async-database: true
+
+# ========================================
+# INTEGRATION SETTINGS
+# ========================================
+integrations:
+  # PlaceholderAPI support
+  placeholderapi:
+    enabled: true
+
+  # WorldGuard support
+  worldguard:
+    enabled: true
+    # Regions where fishing is allowed
+    allowed-regions: []
+    # Regions where fishing is disabled
+    disabled-regions: []
+
+  # Citizens NPC support
+  citizens:
+    enabled: false
+
+  # McMMO integration
+  mcmmo:
+    enabled: false
+    # Give McMMO fishing XP
+    give-fishing-xp: false
+
+  # Jobs plugin integration
+  jobs:
+    enabled: false
+
+  # EssentialsX integration
+  essentials:
+    enabled: false
+
+# ========================================
+# ADVANCED SETTINGS
+# ========================================
+advanced:
+  # Enable metrics collection (bStats)
+  metrics: true
+
+  # Update checker
+  update-checker:
+    enabled: true
+    # Notify ops about updates
+    notify-ops: true
+
+  # Debug settings
+  debug:
+    # Enable debug mode
+    enabled: false
+    # Debug level: info, warn, error
+    level: "info"
+    # Log skill check details
+    log-skill-checks: false
+    # Log price calculations
+    log-pricing: false
+
+  # Backup settings
+  backup:
+    # Enable automatic backups
+    enabled: true
+    # Backup interval (hours)
+    interval: 24
+    # Number of backups to keep
+    keep-backups: 7
+
+  # Custom hooks for developers
+  hooks:
+    # Enable custom event hooks
+    custom-events: true
+    # Enable API access
+    api-access: true

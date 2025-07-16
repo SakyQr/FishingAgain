@@ -1,0 +1,12 @@
+# English Messages
+fishing_success: "&a✓ You successfully caught a {0}!"
+fishing_failed: "&c✗ The fish got away! Try again."
+experience_gained: "&b+{0} Fishing XP &7| Level {1} &8[&7{2}&8/&7{3}&8]"
+level_up: "&6&l★ FISHING LEVEL UP! &7You are now level &6{0}&7!"
+
+# Commands (if you add them later)
+fishing_stats: "&6=== &lYour Fishing Stats &6==="
+fishing_level: "&7Level: &6{0}"
+fishing_experience: "&7Experience: &6{1}&7/&6{2}"
+fishing_top_header: "&6=== &lTop Fishers &6==="
+fishing_top_entry: "&7{0}. &6{1} &7- Level {2}"
